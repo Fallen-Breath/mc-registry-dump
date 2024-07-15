@@ -21,6 +21,7 @@
 package me.fallenbreath.mcregistrydump;
 
 import com.google.common.collect.Maps;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.minecraft.SharedConstants;
 import net.minecraft.registry.Registries;
@@ -34,7 +35,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-//#if MC >= 11800
+//#if MC >= 11802
 import org.slf4j.Logger;
 //#else
 //$$ import org.apache.logging.log4j.Logger;
@@ -56,14 +57,14 @@ public class RegistryDumper
 		json.put("screen_handler", dumpRegistry(Registries.SCREEN_HANDLER));
 		json.put("status_effect", dumpRegistry(Registries.STATUS_EFFECT));
 
-		var gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
+		Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
 
-		var outputDir = Optional.ofNullable(System.getenv("MC_REGISTRY_DUMP_OUTPUT_DIR")).orElse("output");
-		var path = Path.of(outputDir, "%s.json".formatted(SharedConstants.getGameVersion().getName()));
+		String outputDir = Optional.ofNullable(System.getenv("MC_REGISTRY_DUMP_OUTPUT_DIR")).orElse("output");
+		Path path = Path.of(outputDir, "%s.json".formatted(SharedConstants.getGameVersion().getName()));
 		try
 		{
 			boolean ignored = path.getParent().toFile().mkdirs();
-			Files.writeString(path, gson.toJson(json), StandardCharsets.UTF_8);
+			Files.write(path, gson.toJson(json).getBytes(StandardCharsets.UTF_8));
 		}
 		catch (IOException e)
 		{
