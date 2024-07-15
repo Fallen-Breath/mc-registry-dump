@@ -25,7 +25,6 @@ import com.google.gson.GsonBuilder;
 import net.minecraft.SharedConstants;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -34,6 +33,12 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+
+//#if MC >= 11800
+import org.slf4j.Logger;
+//#else
+//$$ import org.apache.logging.log4j.Logger;
+//#endif
 
 public class RegistryDumper
 {

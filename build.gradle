@@ -1,3 +1,6 @@
+import com.replaymod.gradle.preprocess.Node
+import groovy.json.JsonSlurper
+
 plugins {
 	id 'maven-publish'
 	id 'com.github.hierynomus.license' version '0.16.1' apply false
@@ -11,19 +14,23 @@ plugins {
 	id 'me.fallenbreath.yamlang' version '1.4.0' apply false
 }
 
-preprocess {
-	def mc1202 = createNode('1.20.2', 1_20_02, '')
-	def mc1203 = createNode('1.20.3', 1_20_03, '')
-	def mc1204 = createNode('1.20.4', 1_20_04, '')
-	def mc1205 = createNode('1.20.5', 1_20_05, '')
-	def mc1206 = createNode('1.20.6', 1_20_06, '')
-	def mc121 = createNode('1.21'  , 1_21_00, '')
+def settings = new JsonSlurper().parseText(file('settings.json').text)
 
-	mc1202.link(mc1203, null)
-	mc1203.link(mc1204, null)
-	mc1204.link(mc1205, null)
-	mc1205.link(mc1206, null)
-	mc1206.link(mc121, null)
+preprocess {
+	Node prevNode = null
+	for (String version : settings.versions) {
+		String[] parts = version.split("\\.")
+		if (parts.size() == 2) {
+			parts = [parts[0], parts[1], "0"]
+		}
+		int versionId = Integer.parseInt(parts[0]) * 10000 + Integer.parseInt(parts[1]) * 100 + Integer.parseInt(parts[2])
+		Node node = createNode(version, versionId, '')
+		if (prevNode != null) {
+			def mappingFile = rootProject.file("versions/mapping-${prevNode.project}-${version}.txt")
+			prevNode.link(node, mappingFile.isFile() ? mappingFile : null)
+		}
+		prevNode = node
+	}
 }
 
 tasks.register('buildAndGather') {
