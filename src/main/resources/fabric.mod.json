@@ -10,19 +10,19 @@
   ],
   "contact": {
     "homepage": "https://modrinth.com",
-    "sources": "https://github.com/Fallen-Breath/fabric-mod-template"
+    "sources": "https://github.com/Fallen-Breath/mc-registry-dump"
   },
 
-  "icon": "assets/template_mod/icon.png",
+  "icon": "assets/mcregistrydump/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "me.fallenbreath.template_mod.TemplateMod"
+      "me.fallenbreath.mcregistrydump.McRegistryDumpMod"
     ]
   },
   "mixins": [
-    "template_mod.mixins.json"
+    "mcregistrydump.mixins.json"
   ],
 
   "depends": {
