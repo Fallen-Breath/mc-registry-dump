@@ -57,6 +57,7 @@ loom {
 		ideConfigGenerated = true
 		runDir '../../run'
 		vmArgs commonVmArgs
+		environmentVariable('MC_REGISTRY_DUMP_OUTPUT_DIR', '../output')
 	}
 }
 
