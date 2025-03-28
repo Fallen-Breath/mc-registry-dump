@@ -4,19 +4,21 @@ import groovy.json.JsonSlurper
 plugins {
 	id 'maven-publish'
 	id 'com.github.hierynomus.license' version '0.16.1' apply false
-	id 'fabric-loom' version '1.7-SNAPSHOT' apply false
+	id 'fabric-loom' version '1.10-SNAPSHOT' apply false
 
 	// https://github.com/ReplayMod/preprocessor
 	// https://github.com/Fallen-Breath/preprocessor
-	id 'com.replaymod.preprocess' version 'ce1aeb2b'
+	id 'com.replaymod.preprocess' version '9d21b334a7'
 
 	// https://github.com/Fallen-Breath/yamlang
-	id 'me.fallenbreath.yamlang' version '1.4.0' apply false
+	id 'me.fallenbreath.yamlang' version '1.4.1' apply false
 }
 
 def settings = new JsonSlurper().parseText(file('settings.json').text)
 
 preprocess {
+    strictExtraMappings = false
+
 	Node prevNode = null
 	for (String version : settings.versions) {
 		String[] parts = version.split("\\.")
@@ -52,7 +54,7 @@ tasks.register('buildAndGather') {
 					exclude '*-dev.jar', '*-sources.jar', '*-shadow.jar'
 				}
 				into buildLibs(rootProject)
-				duplicatesStrategy DuplicatesStrategy.INCLUDE
+				duplicatesStrategy = DuplicatesStrategy.INCLUDE
 			}
 		}
 	}
