@@ -35,16 +35,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-//#if MC >= 11802
-import org.slf4j.Logger;
-//#else
-//$$ import org.apache.logging.log4j.Logger;
-//#endif
-
 public class RegistryDumper
 {
-	private static final Logger LOGGER = McRegistryDumpMod.LOGGER;
-
 	public static void dump()
 	{
 		Map<String, Object> json = Maps.newLinkedHashMap();
@@ -70,7 +62,7 @@ public class RegistryDumper
 		{
 			throw new RuntimeException(e);
 		}
-		LOGGER.info("Registry dump is written to {}", path);
+		McRegistryDumpMod.LOGGER.info("Registry dump is written to {}", path);
 	}
 
 	private static <T> Map<String, Integer> dumpRegistry(Registry<T> registry)
