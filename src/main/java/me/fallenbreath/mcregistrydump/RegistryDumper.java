@@ -60,7 +60,7 @@ public class RegistryDumper
 		Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
 
 		String outputDir = Optional.ofNullable(System.getenv("MC_REGISTRY_DUMP_OUTPUT_DIR")).orElse("output");
-		Path path = Path.of(outputDir, "%s.json".formatted(SharedConstants.getGameVersion().getName()));
+		Path path = Path.of(outputDir, String.format("%s.json", SharedConstants.getGameVersion().getId()));
 		try
 		{
 			boolean ignored = path.getParent().toFile().mkdirs();
