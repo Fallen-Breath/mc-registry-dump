@@ -4,14 +4,14 @@ import groovy.json.JsonSlurper
 plugins {
 	id 'maven-publish'
 	id 'com.github.hierynomus.license' version '0.16.1' apply false
-	id 'fabric-loom' version '1.10-SNAPSHOT' apply false
+	id 'fabric-loom' version '1.11-SNAPSHOT' apply false
 
 	// https://github.com/ReplayMod/preprocessor
 	// https://github.com/Fallen-Breath/preprocessor
-	id 'com.replaymod.preprocess' version '0a04a5668b'
+	id 'com.replaymod.preprocess' version 'd452ef7612'
 
 	// https://github.com/Fallen-Breath/yamlang
-	id 'me.fallenbreath.yamlang' version '1.4.1' apply false
+	id 'me.fallenbreath.yamlang' version '1.5.0' apply false
 }
 
 def settings = new JsonSlurper().parseText(file('settings.json').text)
@@ -20,7 +20,7 @@ preprocess {
     strictExtraMappings = false
 
 	Node prevNode = null
-	for (String version : settings.versions) {
+	for (String version : new ArrayList<>(settings.versions).toSorted()) {
 		String[] parts = version.split("\\.")
 		if (parts.size() == 2) {
 			parts = [parts[0], parts[1], "0"]
