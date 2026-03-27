@@ -24,8 +24,8 @@ import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.minecraft.SharedConstants;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -41,18 +41,19 @@ public class RegistryDumper
 	{
 		Map<String, Object> json = Maps.newLinkedHashMap();
 
-		json.put("block", dumpRegistry(Registries.BLOCK));
-		json.put("block_entity_type", dumpRegistry(Registries.BLOCK_ENTITY_TYPE));
-		json.put("entity_type", dumpRegistry(Registries.ENTITY_TYPE));
-		json.put("item", dumpRegistry(Registries.ITEM));
-		json.put("particle_type", dumpRegistry(Registries.PARTICLE_TYPE));
-		json.put("screen_handler", dumpRegistry(Registries.SCREEN_HANDLER));
-		json.put("status_effect", dumpRegistry(Registries.STATUS_EFFECT));
+		// TODO: name renames
+		json.put("block", dumpRegistry(BuiltInRegistries.BLOCK));
+		json.put("block_entity_type", dumpRegistry(BuiltInRegistries.BLOCK_ENTITY_TYPE));
+		json.put("entity_type", dumpRegistry(BuiltInRegistries.ENTITY_TYPE));
+		json.put("item", dumpRegistry(BuiltInRegistries.ITEM));
+		json.put("particle_type", dumpRegistry(BuiltInRegistries.PARTICLE_TYPE));
+		json.put("screen_handler", dumpRegistry(BuiltInRegistries.MENU));
+		json.put("status_effect", dumpRegistry(BuiltInRegistries.MOB_EFFECT));
 
 		Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
 
 		String outputDir = Optional.ofNullable(System.getenv("MC_REGISTRY_DUMP_OUTPUT_DIR")).orElse("output");
-		Path path = Path.of(outputDir, String.format("%s.json", SharedConstants.getGameVersion().getId()));
+		Path path = Path.of(outputDir, String.format("%s.json", SharedConstants.getCurrentVersion().getId()));
 		try
 		{
 			boolean ignored = path.getParent().toFile().mkdirs();
@@ -70,7 +71,7 @@ public class RegistryDumper
 		Map<String, Integer> result = Maps.newLinkedHashMap();
 		for (T item : registry)
 		{
-			result.put(Objects.requireNonNull(registry.getId(item)).toString(), registry.getRawId(item));
+			result.put(Objects.requireNonNull(registry.getKey(item)).toString(), registry.getId(item));
 		}
 		return result;
 	}

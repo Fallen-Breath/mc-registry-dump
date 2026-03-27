@@ -39,10 +39,16 @@ dependencies {
 	// loom
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	if (!unobfuscated) {
-		mappings loom.layered() {
-			officialMojangMappings()
-			if (project.parchment_version.size() > 0) {
-				parchment("org.parchmentmc.data:parchment-${project.minecraft_version}:${project.parchment_version}@zip")
+		if (project.hasProperty('yarn_mappings')) {
+			minecraft "com.mojang:minecraft:${project.minecraft_version}"
+			mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+			modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+		} else {
+			mappings loom.layered() {
+				officialMojangMappings()
+				if (project.parchment_version.size() > 0) {
+					parchment("org.parchmentmc.data:parchment-${project.minecraft_version}:${project.parchment_version}@zip")
+				}
 			}
 		}
 	}
