@@ -2495,7 +2495,7 @@
     "minecraft:scrape": 94,
     "minecraft:shriek": 95
   },
-  "screen_handler": {
+  "menu": {
     "minecraft:generic_9x1": 0,
     "minecraft:generic_9x2": 1,
     "minecraft:generic_9x3": 2,
@@ -2522,7 +2522,7 @@
     "minecraft:cartography_table": 23,
     "minecraft:stonecutter": 24
   },
-  "status_effect": {
+  "mob_effect": {
     "minecraft:speed": 1,
     "minecraft:slowness": 2,
     "minecraft:haste": 3,

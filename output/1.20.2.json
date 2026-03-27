@@ -2527,7 +2527,7 @@
     "minecraft:shriek": 93,
     "minecraft:egg_crack": 94
   },
-  "screen_handler": {
+  "menu": {
     "minecraft:generic_9x1": 0,
     "minecraft:generic_9x2": 1,
     "minecraft:generic_9x3": 2,
@@ -2553,7 +2553,7 @@
     "minecraft:cartography_table": 22,
     "minecraft:stonecutter": 23
   },
-  "status_effect": {
+  "mob_effect": {
     "minecraft:speed": 0,
     "minecraft:slowness": 1,
     "minecraft:haste": 2,

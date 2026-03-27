@@ -41,14 +41,13 @@ public class RegistryDumper
 	{
 		Map<String, Object> json = Maps.newLinkedHashMap();
 
-		// TODO: name renames
 		json.put("block", dumpRegistry(BuiltInRegistries.BLOCK));
 		json.put("block_entity_type", dumpRegistry(BuiltInRegistries.BLOCK_ENTITY_TYPE));
 		json.put("entity_type", dumpRegistry(BuiltInRegistries.ENTITY_TYPE));
 		json.put("item", dumpRegistry(BuiltInRegistries.ITEM));
 		json.put("particle_type", dumpRegistry(BuiltInRegistries.PARTICLE_TYPE));
-		json.put("screen_handler", dumpRegistry(BuiltInRegistries.MENU));
-		json.put("status_effect", dumpRegistry(BuiltInRegistries.MOB_EFFECT));
+		json.put("menu", dumpRegistry(BuiltInRegistries.MENU));
+		json.put("mob_effect", dumpRegistry(BuiltInRegistries.MOB_EFFECT));
 
 		Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
 
